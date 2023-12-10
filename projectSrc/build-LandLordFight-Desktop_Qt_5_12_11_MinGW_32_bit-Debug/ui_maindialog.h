@@ -31,7 +31,7 @@ public:
     QWidget *page_game;
     QWidget *widget_2;
     QPushButton *pb_test;
-    QWidget *widget;
+    QWidget *layoutWidget;
     QHBoxLayout *horizontalLayout_3;
     QSpacerItem *horizontalSpacer;
     QWidget *wdg_callLord;
@@ -44,6 +44,9 @@ public:
     QPushButton *pb_helpPlayCard;
     QPushButton *pb_pass;
     QSpacerItem *horizontalSpacer_2;
+    QLabel *lb_leftPass;
+    QLabel *lb_rightPass;
+    QLabel *lb_midPass;
     QWidget *page_end;
     QLabel *lb_resultShow;
     QLabel *lb_win;
@@ -79,10 +82,10 @@ public:
         pb_test = new QPushButton(widget_2);
         pb_test->setObjectName(QString::fromUtf8("pb_test"));
         pb_test->setGeometry(QRect(0, 0, 80, 24));
-        widget = new QWidget(widget_2);
-        widget->setObjectName(QString::fromUtf8("widget"));
-        widget->setGeometry(QRect(0, 400, 1001, 56));
-        horizontalLayout_3 = new QHBoxLayout(widget);
+        layoutWidget = new QWidget(widget_2);
+        layoutWidget->setObjectName(QString::fromUtf8("layoutWidget"));
+        layoutWidget->setGeometry(QRect(0, 400, 1001, 56));
+        horizontalLayout_3 = new QHBoxLayout(layoutWidget);
         horizontalLayout_3->setSpacing(1);
         horizontalLayout_3->setObjectName(QString::fromUtf8("horizontalLayout_3"));
         horizontalLayout_3->setContentsMargins(0, 0, 0, 0);
@@ -90,7 +93,7 @@ public:
 
         horizontalLayout_3->addItem(horizontalSpacer);
 
-        wdg_callLord = new QWidget(widget);
+        wdg_callLord = new QWidget(layoutWidget);
         wdg_callLord->setObjectName(QString::fromUtf8("wdg_callLord"));
         horizontalLayout = new QHBoxLayout(wdg_callLord);
         horizontalLayout->setObjectName(QString::fromUtf8("horizontalLayout"));
@@ -124,7 +127,7 @@ public:
 
         horizontalLayout_3->addWidget(wdg_callLord);
 
-        wdg_playCards = new QWidget(widget);
+        wdg_playCards = new QWidget(layoutWidget);
         wdg_playCards->setObjectName(QString::fromUtf8("wdg_playCards"));
         horizontalLayout_2 = new QHBoxLayout(wdg_playCards);
         horizontalLayout_2->setObjectName(QString::fromUtf8("horizontalLayout_2"));
@@ -168,6 +171,21 @@ public:
 
         horizontalLayout_3->addItem(horizontalSpacer_2);
 
+        lb_leftPass = new QLabel(widget_2);
+        lb_leftPass->setObjectName(QString::fromUtf8("lb_leftPass"));
+        lb_leftPass->setGeometry(QRect(250, 180, 100, 50));
+        lb_leftPass->setPixmap(QPixmap(QString::fromUtf8(":/image/pass.png")));
+        lb_leftPass->setAlignment(Qt::AlignCenter);
+        lb_rightPass = new QLabel(widget_2);
+        lb_rightPass->setObjectName(QString::fromUtf8("lb_rightPass"));
+        lb_rightPass->setGeometry(QRect(650, 180, 100, 50));
+        lb_rightPass->setPixmap(QPixmap(QString::fromUtf8(":/image/pass.png")));
+        lb_rightPass->setAlignment(Qt::AlignCenter);
+        lb_midPass = new QLabel(widget_2);
+        lb_midPass->setObjectName(QString::fromUtf8("lb_midPass"));
+        lb_midPass->setGeometry(QRect(450, 320, 100, 50));
+        lb_midPass->setPixmap(QPixmap(QString::fromUtf8(":/image/pass.png")));
+        lb_midPass->setAlignment(Qt::AlignCenter);
         sw_page->addWidget(page_game);
         page_end = new QWidget();
         page_end->setObjectName(QString::fromUtf8("page_end"));
@@ -213,6 +231,9 @@ public:
         pb_playCard->setText(QApplication::translate("MainDialog", "\345\207\272\347\211\214", nullptr));
         pb_helpPlayCard->setText(QApplication::translate("MainDialog", "\346\217\220\347\244\272", nullptr));
         pb_pass->setText(QApplication::translate("MainDialog", "\344\270\215\345\207\272", nullptr));
+        lb_leftPass->setText(QString());
+        lb_rightPass->setText(QString());
+        lb_midPass->setText(QString());
         lb_resultShow->setText(QString());
         lb_win->setText(QApplication::translate("MainDialog", "\346\201\255\345\226\234\n"
 " \344\275\240\350\265\242\344\272\206\357\274\201", nullptr));

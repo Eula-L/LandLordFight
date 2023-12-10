@@ -29,6 +29,8 @@ void PlayRound::delayMSecond(int msec)
 
 void PlayRound::startRound(int player)
 {
+    //所有“不出”隐藏
+    m_mainDialog->slot_hideAllPass();
     qDebug()<<"PlayRound::startRound";
     //清除所有玩家外面的手牌
     m_mainDialog->slot_deleteAllPlayerOutCards();
@@ -55,10 +57,12 @@ void PlayRound::turnPlayer(int player)
     //当前玩家更新
     currentPlayer = player;
     if(biggestPlayer == player)
-    {
+    {delayMSecond(1000);
         startRound(player);
         return;
     }
+    //到谁的回合，就清除掉，自己外面的“不出”
+    m_mainDialog->m_lbPassArr[currentPlayer]->hide();
     //不是他的牌权，需要管别人
 
     //清楚玩家外面手牌
@@ -118,7 +122,7 @@ void PlayRound::slot_midPlayerPass()
     //播放声音
     CardSound::playSound(SOUND_PASS);
     //显示 不出
-
+    m_mainDialog->m_lbPassArr[CARDLIST_MID_PLAYER]->show();
     //切换到下一个人
     turnPlayer(CARDLIST_MID_PLAYER+1);
 }
@@ -136,15 +140,18 @@ void PlayRound::slot_computerPlayCards(int player)
     QList<Card*> cards;
     //找能出的牌
     //cards =func();
-    if(AIPlayCard::findSmallestCards(m_mainDialog->m_cardList[player].m_cardList)!=0)
-    {
-        cards =m_mainDialog->m_cardList[player].getSelectedCards();
-    }
+//    if(AIPlayCard::findSmallestCards(m_mainDialog->m_cardList[player].m_cardList)!=0)
+//    {
+//        cards =m_mainDialog->m_cardList[player].getSelectedCards();
+//    }
+    //不管是谁，都管
+    cards = AIPlayCard::BeatCards(m_mainDialog->m_cardList[player].m_cardList,lastPlayerCards);
     if(cards.size()==0)
     {
         //找不到就不要
         CardSound::playSound(SOUND_PASS);
         //显示“不出”todo
+        m_mainDialog->m_lbPassArr[player]->show();
     }
     else
     {

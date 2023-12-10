@@ -26,6 +26,9 @@ MainDialog::MainDialog(QWidget *parent)
     }
     connect(&m_timerRefresh,SIGNAL(timeout()),
             this,SLOT(slot_refreshAllCardList()));
+    m_lbPassArr[CARDLIST_LIFT_PLAYER] = ui->lb_leftPass;
+    m_lbPassArr[CARDLIST_MID_PLAYER] = ui->lb_midPass;
+    m_lbPassArr[CARDLIST_RIGHT_PLAYER] = ui->lb_rightPass;
     //播放背景音乐
     //CardSound::playBGM();
 }
@@ -76,8 +79,8 @@ void MainDialog::slot_setBackGround()
 
 void MainDialog::slot_startOneGame()
 {
-
-         qDebug()<<"void MainDialog::slot_startOneGame()";
+    slot_hideAllPass();
+    qDebug()<<"void MainDialog::slot_startOneGame()";
     //隐藏出牌和叫地主
     slot_showCallLord(false);
     slot_showPlayCards(false);
@@ -175,10 +178,10 @@ void MainDialog::slot_startOneGame()
     //开启叫地主
 
     //测试
-    m_playRound.startRound(CARDLIST_MID_PLAYER);
+    //m_playRound.startRound(CARDLIST_MID_PLAYER);
     //m_playRound.currentPlayer = CARDLIST_LIFT_PLAYER;
-
-    //m_playRound.startRound(CARDLIST_LIFT_PLAYER);
+    //从左侧玩家开始
+    m_playRound.startRound(CARDLIST_LIFT_PLAYER);
 }
 
 void MainDialog::slot_refreshAllCardList()
@@ -266,5 +269,13 @@ void MainDialog::slot_showCallLord(bool flag)
 void MainDialog::on_pb_pass_clicked()
 {
     m_playRound.slot_midPlayerPass();
+}
+
+void MainDialog::slot_hideAllPass()
+{
+    for(QLabel* lb:m_lbPassArr)
+    {
+        lb->hide();
+    }
 }
 

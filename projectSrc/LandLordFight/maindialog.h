@@ -9,6 +9,7 @@
 #include "rulers.h"
 #include "cardsound.h"
 #include "playround.h"
+#include <QLabel>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainDialog; }
 QT_END_NAMESPACE
@@ -48,10 +49,13 @@ private slots:
 
     void on_pb_pass_clicked();
 
+    void slot_hideAllPass();
+
 private:
     Ui::MainDialog *ui;
     //QList<Card* > m_cardLastPlayer;放在回合管理
     CardList m_cardList[CARDLIST_TYPE_COUNT];
+    QLabel* m_lbPassArr[3];
     QTimer m_timerRefresh;//刷新显示定时器
     PlayRound m_playRound;//类中的对象的初始化 要在类的构造的参数列表实现初始化
     friend class PlayRound;

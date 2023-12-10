@@ -19,8 +19,19 @@ public:
 signals:
 
 public:
-    //叫地主阶段
-
+    //叫地主阶段-函数
+    //玩家叫地主和不叫
+    void slot_midPlayerCallLord();
+    void slot_midPlayerNoCallLord();
+    //玩家叫地主和不叫
+    void slot_computerCallLord(int player);
+    void slot_computerNoCallLord(int player);
+    //决定谁先叫地主-随机数
+    void decideBeginLord();
+    //叫地主轮转
+    void turnCallLord();
+    //叫地主函数
+    void callLord(int player);
     /////////////出牌阶段
     //开启回合
     void startRound(int player);
@@ -39,6 +50,11 @@ public:
     void slot_computerPass();
 
     ///////////////结算阶段
+
+    //////////////叫地主阶段使用的成员
+    int beginCallLord;//记录从谁开始
+    bool isEndCall;//是否结束叫地主
+    int lordPlayer;//地主是谁
 
     ///////////////出牌阶段的成员
 
