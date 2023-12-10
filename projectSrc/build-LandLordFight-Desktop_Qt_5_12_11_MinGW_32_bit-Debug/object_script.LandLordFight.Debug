@@ -1,0 +1,13 @@
+debug/aiplaycard.o
+debug/card.o
+debug/cardlist.o
+debug/cardsound.o
+debug/main.o
+debug/maindialog.o
+debug/playround.o
+debug/rulers.o
+debug/qrc_resource.o
+debug/moc_card.o
+debug/moc_cardlist.o
+debug/moc_maindialog.o
+debug/moc_playround.o

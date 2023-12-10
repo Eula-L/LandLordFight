@@ -1,0 +1,13 @@
+release/aiplaycard.o
+release/card.o
+release/cardlist.o
+release/cardsound.o
+release/main.o
+release/maindialog.o
+release/playround.o
+release/rulers.o
+release/qrc_resource.o
+release/moc_card.o
+release/moc_cardlist.o
+release/moc_maindialog.o
+release/moc_playround.o
