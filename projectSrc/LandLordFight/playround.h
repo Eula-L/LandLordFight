@@ -20,18 +20,20 @@ signals:
 
 public:
     //叫地主阶段-函数
+    //决定谁先叫地主-随机数
+    void decideBeginLord();
     //玩家叫地主和不叫
     void slot_midPlayerCallLord();
     void slot_midPlayerNoCallLord();
     //玩家叫地主和不叫
-    void slot_computerCallLord(int player);
+    void slot_computerCallLord(int player);//有炸弹考虑叫地主
     void slot_computerNoCallLord(int player);
-    //决定谁先叫地主-随机数
-    void decideBeginLord();
+
     //叫地主轮转
-    void turnCallLord();
-    //叫地主函数
-    void callLord(int player);
+    void turnCallLord(int player);
+    //叫地主还是放弃
+    void callLordOrGiveUp(int player);
+
     /////////////出牌阶段
     //开启回合
     void startRound(int player);

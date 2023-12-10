@@ -8,6 +8,7 @@ enum SOUND_TYPE{
     SOUND_CALL,
     SOUND_LOSE,//失败
     SOUND_PASS,//不要
+    SOUND_JIAODIZHU,//叫地主
     SOUND_ROBLORD,//抢地主
     SOUND_WIN,
     SOUND_SHUFFLE///洗牌

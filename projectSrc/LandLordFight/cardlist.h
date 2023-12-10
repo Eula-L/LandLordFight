@@ -46,6 +46,8 @@ public:
     //发牌
     //从牌堆拿一张牌
     Card* getOneCard();
+    //把所有牌设置为正面或者反面
+    void setAllCardsPositive(bool flag);
 
     //洗牌
     //打乱顺序 shuffle

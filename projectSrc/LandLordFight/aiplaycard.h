@@ -80,6 +80,8 @@ public:
     static int findSignal(QList<Card*>& card, int point);
     //移除顺子
     static bool removeStraight(QList<Card*>&cards);
+    //用于判断电脑是否叫地主
+    static bool isCallLord(QList<Card*>&cards);
 
 };
 

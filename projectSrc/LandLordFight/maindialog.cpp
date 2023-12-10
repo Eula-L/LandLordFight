@@ -1,5 +1,6 @@
 #include "maindialog.h"
 #include "ui_maindialog.h"
+#include <QDateTime>
 
 
 MainDialog::MainDialog(QWidget *parent)
@@ -17,7 +18,11 @@ MainDialog::MainDialog(QWidget *parent)
     ui->sw_page->setCurrentIndex(0);
     //设置所有背景为统一的，但是开始界面、结算界面上面有图片覆盖
     slot_setBackGround();
-       qDebug()<<"//牌堆数组初始化//创建了八个管理牌的牌堆";
+    qDebug()<<"//牌堆数组初始化//创建了八个管理牌的牌堆";
+
+    //添加随机种子
+    qsrand(QDateTime::currentSecsSinceEpoch());
+
     //牌堆数组初始化
     //创建了八个管理牌的牌堆
     for(int i=0;i<CARDLIST_TYPE_COUNT;i++)
@@ -41,7 +46,7 @@ MainDialog::~MainDialog()
 //点击快速开始
 void MainDialog::on_pb_quickStart_clicked()
 {
-     qDebug()<<"void MainDialog::on_pb_quickStart_clicked()";
+    qDebug()<<"void MainDialog::on_pb_quickStart_clicked()";
     ui->sw_page->setCurrentIndex(1);
     slot_startOneGame();
 }
@@ -79,6 +84,8 @@ void MainDialog::slot_setBackGround()
 
 void MainDialog::slot_startOneGame()
 {
+    //初始化 回合
+    m_playRound.initRound();
     slot_hideAllPass();
     qDebug()<<"void MainDialog::slot_startOneGame()";
     //隐藏出牌和叫地主
@@ -92,7 +99,6 @@ void MainDialog::slot_startOneGame()
         card->setCardPositive(false);
         m_cardList[CARDLIST_WHOLE].addCard(card);
     }
-
     //洗牌
     m_cardList[CARDLIST_WHOLE].shuffle();
     //使用定时器
@@ -101,7 +107,6 @@ void MainDialog::slot_startOneGame()
     //m_cardList[CARDLIST_WHOLE].cardShow();
     //总牌堆打印
     m_cardList[CARDLIST_WHOLE].cardPrint();
-
     //发牌 +动画+发牌音效
     QSound sound (":/sound/xipai.wav");
     sound.play();
@@ -123,7 +128,6 @@ void MainDialog::slot_startOneGame()
         }
     }
     _sleep(100);
-
     //2、地主牌
     while(i<54)
     {
@@ -134,7 +138,6 @@ void MainDialog::slot_startOneGame()
         m_cardList[CARDLIST_LORD].addCard(card);
         i++;
     }
-
     //排序
     //玩家手牌排序
     i=0;
@@ -145,14 +148,6 @@ void MainDialog::slot_startOneGame()
     }
     //地主牌排序
     m_cardList[CARDLIST_LORD].cardSort();
-
-    //显示
-//    i=0;
-//    while(i<3)
-//    {
-//        m_cardList[CARDLIST_LIFT_PLAYER+i].cardShow();
-//        i++;
-//    }
     sound.stop();//发牌音效结束
 
     //打印牌
@@ -176,12 +171,13 @@ void MainDialog::slot_startOneGame()
     }
     m_cardList[CARDLIST_LORD].cardPrint();
     //开启叫地主
-
+    m_playRound.decideBeginLord();
     //测试
     //m_playRound.startRound(CARDLIST_MID_PLAYER);
     //m_playRound.currentPlayer = CARDLIST_LIFT_PLAYER;
     //从左侧玩家开始
-    m_playRound.startRound(CARDLIST_LIFT_PLAYER);
+    //m_playRound.startRound(CARDLIST_LIFT_PLAYER);
+
 }
 
 void MainDialog::slot_refreshAllCardList()
@@ -277,5 +273,32 @@ void MainDialog::slot_hideAllPass()
     {
         lb->hide();
     }
+}
+
+
+void MainDialog::on_pb_callLord_clicked()
+{
+    m_playRound.slot_midPlayerCallLord();
+}
+
+
+void MainDialog::on_pb_noCall_clicked()
+{
+    m_playRound.slot_midPlayerNoCallLord();
+}
+
+void MainDialog::slot_lordAddCards(int player)
+{
+    //遍历牌堆，赋值出来（取出来）加进去
+    for(Card* c:m_cardList[CARDLIST_LORD].m_cardList)
+    {
+        Card* newCard = new Card(c->m_point,c->m_suit,this->ui->page_game);
+        m_cardList[player].addCard(newCard);
+    }
+    //排序
+    m_cardList[player].cardSort();
+    //地主牌 翻面
+    m_cardList[CARDLIST_LORD].setAllCardsPositive(true);
+
 }
 

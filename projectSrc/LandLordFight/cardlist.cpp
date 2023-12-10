@@ -237,6 +237,14 @@ Card *CardList::getOneCard()
     return nullptr;
 }
 
+void CardList::setAllCardsPositive(bool flag)
+{
+    for(Card* c:m_cardList)
+    {
+        c->setCardPositive(flag);
+    }
+}
+
 #include <random>
 #include <QDateTime>
 void CardList::shuffle()

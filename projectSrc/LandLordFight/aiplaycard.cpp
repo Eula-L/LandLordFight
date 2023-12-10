@@ -1226,6 +1226,24 @@ bool AIPlayCard::removeStraight(QList<Card *> &cards)
 
     return false;
     //找到顺子
-    //找到就返回真
+//找到就返回真
+}
+
+bool AIPlayCard::isCallLord(QList<Card *> &cards)
+{
+    //有炸返回真
+    int selected = findBomb(cards,-1);
+    if(selected ==0)
+    {
+        selected = findKingBomb(cards);
+        if(selected == 0)
+            return  false;
+    }
+    //取消选中的牌
+    for(Card* c:cards)
+    {
+        c->setUnSelected();
+    }
+    return true;
 }
 

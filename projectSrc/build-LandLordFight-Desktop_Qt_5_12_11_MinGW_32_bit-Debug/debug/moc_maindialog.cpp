@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_MainDialog_t {
-    QByteArrayData data[18];
-    char stringdata0[325];
+    QByteArrayData data[21];
+    char stringdata0[387];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -48,7 +48,10 @@ QT_MOC_LITERAL(13, 247, 18), // "slot_showPlayCards"
 QT_MOC_LITERAL(14, 266, 4), // "flag"
 QT_MOC_LITERAL(15, 271, 17), // "slot_showCallLord"
 QT_MOC_LITERAL(16, 289, 18), // "on_pb_pass_clicked"
-QT_MOC_LITERAL(17, 308, 16) // "slot_hideAllPass"
+QT_MOC_LITERAL(17, 308, 16), // "slot_hideAllPass"
+QT_MOC_LITERAL(18, 325, 22), // "on_pb_callLord_clicked"
+QT_MOC_LITERAL(19, 348, 20), // "on_pb_noCall_clicked"
+QT_MOC_LITERAL(20, 369, 17) // "slot_lordAddCards"
 
     },
     "MainDialog\0on_pb_quickStart_clicked\0"
@@ -59,7 +62,9 @@ QT_MOC_LITERAL(17, 308, 16) // "slot_hideAllPass"
     "slot_deleteAllPlayerOutCards\0"
     "slot_deleteOnePlayerOutCards\0player\0"
     "slot_showPlayCards\0flag\0slot_showCallLord\0"
-    "on_pb_pass_clicked\0slot_hideAllPass"
+    "on_pb_pass_clicked\0slot_hideAllPass\0"
+    "on_pb_callLord_clicked\0on_pb_noCall_clicked\0"
+    "slot_lordAddCards"
 };
 #undef QT_MOC_LITERAL
 
@@ -69,7 +74,7 @@ static const uint qt_meta_data_MainDialog[] = {
        8,       // revision
        0,       // classname
        0,    0, // classinfo
-      14,   14, // methods
+      17,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -77,20 +82,23 @@ static const uint qt_meta_data_MainDialog[] = {
        0,       // signalCount
 
  // slots: name, argc, parameters, tag, flags
-       1,    0,   84,    2, 0x08 /* Private */,
-       3,    0,   85,    2, 0x08 /* Private */,
-       4,    0,   86,    2, 0x08 /* Private */,
-       5,    0,   87,    2, 0x08 /* Private */,
-       6,    0,   88,    2, 0x08 /* Private */,
-       7,    0,   89,    2, 0x08 /* Private */,
-       8,    0,   90,    2, 0x08 /* Private */,
-       9,    0,   91,    2, 0x08 /* Private */,
-      10,    0,   92,    2, 0x08 /* Private */,
-      11,    1,   93,    2, 0x08 /* Private */,
-      13,    1,   96,    2, 0x08 /* Private */,
-      15,    1,   99,    2, 0x08 /* Private */,
-      16,    0,  102,    2, 0x08 /* Private */,
-      17,    0,  103,    2, 0x08 /* Private */,
+       1,    0,   99,    2, 0x08 /* Private */,
+       3,    0,  100,    2, 0x08 /* Private */,
+       4,    0,  101,    2, 0x08 /* Private */,
+       5,    0,  102,    2, 0x08 /* Private */,
+       6,    0,  103,    2, 0x08 /* Private */,
+       7,    0,  104,    2, 0x08 /* Private */,
+       8,    0,  105,    2, 0x08 /* Private */,
+       9,    0,  106,    2, 0x08 /* Private */,
+      10,    0,  107,    2, 0x08 /* Private */,
+      11,    1,  108,    2, 0x08 /* Private */,
+      13,    1,  111,    2, 0x08 /* Private */,
+      15,    1,  114,    2, 0x08 /* Private */,
+      16,    0,  117,    2, 0x08 /* Private */,
+      17,    0,  118,    2, 0x08 /* Private */,
+      18,    0,  119,    2, 0x08 /* Private */,
+      19,    0,  120,    2, 0x08 /* Private */,
+      20,    1,  121,    2, 0x08 /* Private */,
 
  // slots: parameters
     QMetaType::Void,
@@ -107,6 +115,9 @@ static const uint qt_meta_data_MainDialog[] = {
     QMetaType::Void, QMetaType::Bool,   14,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   12,
 
        0        // eod
 };
@@ -131,6 +142,9 @@ void MainDialog::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, 
         case 11: _t->slot_showCallLord((*reinterpret_cast< bool(*)>(_a[1]))); break;
         case 12: _t->on_pb_pass_clicked(); break;
         case 13: _t->slot_hideAllPass(); break;
+        case 14: _t->on_pb_callLord_clicked(); break;
+        case 15: _t->on_pb_noCall_clicked(); break;
+        case 16: _t->slot_lordAddCards((*reinterpret_cast< int(*)>(_a[1]))); break;
         default: ;
         }
     }
@@ -165,13 +179,13 @@ int MainDialog::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 14)
+        if (_id < 17)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 14;
+        _id -= 17;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 14)
+        if (_id < 17)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 14;
+        _id -= 17;
     }
     return _id;
 }

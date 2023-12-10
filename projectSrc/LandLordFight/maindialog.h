@@ -51,6 +51,13 @@ private slots:
 
     void slot_hideAllPass();
 
+    void on_pb_callLord_clicked();
+
+    void on_pb_noCall_clicked();
+
+    //地主加三张牌
+    void slot_lordAddCards(int player);
+
 private:
     Ui::MainDialog *ui;
     //QList<Card* > m_cardLastPlayer;放在回合管理

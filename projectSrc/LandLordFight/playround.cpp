@@ -11,6 +11,11 @@ PlayRound::PlayRound(MainDialog *p,QObject *parent)
 
 void PlayRound::initRound()
 {
+    //关于叫地主
+    beginCallLord =CARDLIST_LORD;//记录从谁开始
+    isEndCall = false;//是否结束叫地主
+    lordPlayer = CARDLIST_LORD;//地主是谁
+    //关于出牌
     biggestPlayer = CARDLIST_LORD;
     currentPlayer =CARDLIST_LORD;
     lastPlayerCards.clear();
@@ -26,6 +31,182 @@ void PlayRound::delayMSecond(int msec)
     while(msec>=0);
 
 }
+void PlayRound::decideBeginLord()
+{
+    beginCallLord = qrand()%3; // 0 1 2
+    callLordOrGiveUp(beginCallLord);
+}
+
+void PlayRound::slot_midPlayerCallLord()
+{
+    //播放声音
+    //区分叫地主和抢地主
+
+    if(biggestPlayer ==CARDLIST_LORD)
+    {
+        //没人叫
+        CardSound::playSound(SOUND_JIAODIZHU);
+    }
+    else
+    {
+        //有人叫，那就是抢地主
+        CardSound::playSound(SOUND_ROBLORD);
+    }
+    biggestPlayer = CARDLIST_MID_PLAYER;
+    //叫完了，隐藏ui
+    m_mainDialog->slot_showCallLord(false);
+    //显示叫地主和不叫的ui标签todo
+
+    //回合剩余时间显示
+
+    //切换下一个
+    turnCallLord(CARDLIST_MID_PLAYER+1);
+}
+
+void PlayRound::slot_midPlayerNoCallLord()
+{
+        //播放声音
+     CardSound::playSound(SOUND_NOCALL);
+        //显示不叫todo
+     //叫完了，隐藏ui
+     m_mainDialog->slot_showCallLord(false);
+    //回合时间 todo
+    //切换下一个玩家
+     turnCallLord(CARDLIST_MID_PLAYER+1);
+}
+
+void PlayRound::slot_computerCallLord(int player)
+{
+    //看有没有炸，有就叫
+    bool res = AIPlayCard::isCallLord(m_mainDialog->m_cardList[player].m_cardList);
+    if(res)
+    {
+        //叫地主
+        if(biggestPlayer ==CARDLIST_LORD)
+        {
+            //没人叫
+            CardSound::playSound(SOUND_JIAODIZHU);
+        }
+        else
+        {
+            //有人叫，那就是抢地主
+            CardSound::playSound(SOUND_ROBLORD);
+        }
+        biggestPlayer = player;
+        //回合剩余时间显示todo
+    }
+    else
+    {
+        //不叫地主
+        CardSound::playSound(SOUND_NOCALL);
+    }
+    //切换下一个
+    turnCallLord((player+1)%3);
+}
+
+void PlayRound::slot_computerNoCallLord(int player)
+{
+    currentPlayer =player;
+    //首先判断是否结束
+    if(player == (biggestPlayer+1)%3)
+    {
+        //第二次进
+       if(isEndCall)
+        {
+           //都不叫地主
+           if(biggestPlayer ==CARDLIST_LORD)
+           {
+               //重新开局
+               delayMSecond(1000);
+               m_mainDialog->on_pb_quickStart_clicked();
+               return;
+           }
+           //有人叫地主
+           //开始出牌阶段
+           lordPlayer = biggestPlayer;
+           //设置地主的图标
+
+           //地主加三张牌
+            m_mainDialog->slot_lordAddCards(lordPlayer);
+           //开始出牌阶段
+           delayMSecond(1000);
+           startRound(biggestPlayer);
+           return;
+        }
+    }
+    isEndCall = true;
+    //没结束 抢地主
+    if(biggestPlayer ==player)
+    {
+        turnCallLord((player+1)%3);
+        return;
+    }
+    callLordOrGiveUp(player);
+}
+
+void PlayRound::turnCallLord(int player)
+{
+        //当前玩家赋值
+        currentPlayer=player;
+
+        //首先判断是否结束  1-》2-》0-》1-》2  2决定 是否结束 来记录第一次还是第二次 isEndcall来确认
+        if(player==(beginCallLord+1)%3)
+        {
+            //这个player第二次进来 结束
+            if(isEndCall)
+            {
+                //都不叫地主
+                if(biggestPlayer==CARDLIST_LORD)
+                {
+                    //重新开局
+                    delayMSecond(11000);
+                    m_mainDialog->on_pb_quickStart_clicked();
+                    return;
+                }
+                //有人叫地主
+                lordPlayer=biggestPlayer;
+                //设置地主图标
+
+                //地主家三张牌
+                m_mainDialog->slot_lordAddCards(lordPlayer);
+                //开始出牌阶段
+                delayMSecond(1000);
+                startRound(biggestPlayer);
+                return;
+            }
+        }
+        isEndCall=true;
+        //没有结束
+
+        //进行 抢地主
+        //如果自己是最大的 ，不能抢自己
+        if(biggestPlayer==player)
+        {
+            turnCallLord((player+1)%3);
+            return;
+        }
+        callLordOrGiveUp(player);
+
+    }
+
+void PlayRound::callLordOrGiveUp(int player)
+{
+    //看当前用户，叫地主还是放弃
+    currentPlayer = player;
+
+    //如果是玩家，显示ui
+    if(currentPlayer == CARDLIST_MID_PLAYER)
+    {
+        m_mainDialog->slot_showCallLord(true);
+    }
+    else
+    {
+        delayMSecond(2000);
+        slot_computerCallLord(currentPlayer);
+    }
+}
+
+
 
 void PlayRound::startRound(int player)
 {
