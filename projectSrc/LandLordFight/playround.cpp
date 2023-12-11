@@ -159,7 +159,7 @@ void PlayRound::turnCallLord(int player)
                 if(biggestPlayer==CARDLIST_LORD)
                 {
                     //重新开局
-                    delayMSecond(11000);
+                    delayMSecond(5000);
                     m_mainDialog->on_pb_quickStart_clicked();
                     return;
                 }
@@ -177,7 +177,6 @@ void PlayRound::turnCallLord(int player)
         }
         isEndCall=true;
         //没有结束
-
         //进行 抢地主
         //如果自己是最大的 ，不能抢自己
         if(biggestPlayer==player)
